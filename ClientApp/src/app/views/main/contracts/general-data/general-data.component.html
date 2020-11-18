@@ -1,0 +1,191 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-2">
+      <app-main-menu></app-main-menu>
+    </div>
+    <div class="col-10 content">
+      <div class="title borde-title">
+        <a data-target="#sidebar" data-toggle="collapse" class="d-md-none"><i class="fa fa-bars"></i></a><a [routerLink]="['/Lista-Contratos']"> Contratos </a> / Datos Generales
+      </div>
+      <div class="content-section" *ngIf="!(contrato && contrato.length > 0); else noRecord">
+      
+        <mat-accordion class="example-headers-align">
+          <mat-expansion-panel [expanded]="step === 0">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Informaci&oacute;n General
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+
+    
+            <table id="responsive-example-table" class="large-only" cellspacing="0">
+              <tbody>
+                <tr>
+                  <td class="label"><strong>C&oacute;digo de Contrato</strong></td>
+                  <td class="input" style="border-right: 5px #fff solid">{{ contrato.txt_codigoContrato }}</td>
+                  <td class="label"><strong>Plazo del Contrato</strong></td>
+                  <td class="input">{{ contrato.qn_vigenciaContrato }}</td>
+                </tr>
+                <tr>
+                  <td class="label"><strong>Tipo Contrato</strong></td>
+                  <td class="input" style="border-right: 5px #fff solid">{{ contrato.tipoContrato }}</td>
+                  <td class="label"><strong>Fecha de Suscripcion</strong></td>
+                  <td class="input">{{ contrato.dt_fechaSuscripcion | date: 'dd-MM-yyyy' }}</td>
+                </tr>
+                <tr>
+                  <td class="label"><strong>Numero de Proceso</strong></td>
+                  <td class="input" style="border-right: 5px #fff solid">{{ contrato.txt_numProceso }}</td>
+                  <td class="label"><strong>Fecha de Inicio</strong></td>
+                  <td class="input">{{ contrato.dt_fechaInicio | date: 'dd-MM-yyyy' }}</td>
+                </tr>
+                <tr>
+                  <td class="label"><strong>Tipo de Proceso</strong></td>
+                  <td class="input" style="border-right: 5px #fff solid">{{ contrato.tipoProceso }}</td>
+                  <td class="label"><strong>Fecha de Finalizaci&oacute;n</strong></td>
+                  <td class="input">{{ contrato.fechaFinReal | date: 'dd-MM-yyyy' }}</td>
+                </tr>
+                <tr>
+                  <td class="label"><strong>Monto Adjudicado</strong></td>
+                  <td class="input" style="border-right: 5px #fff solid">{{ contrato.montoActual | currency  }}</td>
+                  <td class="label"><strong>Recurrencia</strong></td>
+                  <td *ngIf="(contrato.bol_recurrencia)" class="input">SI</td>
+                  <td *ngIf="!(contrato.bol_recurrencia)" class="input">NO</td>
+                </tr>
+                <tr>
+                  <td class="label"><strong>Proveedor</strong></td>
+                  <td class="input" style="border-right: 5px #fff solid">{{ contrato.txt_nombreProveedor | titlecase }}</td>
+                  <td class="label"><strong>RUC</strong></td>
+                  <td class="input">{{ contrato.txt_rucProveedor }}</td>
+                </tr>
+                <tr>
+                  <td class="label"><strong>Obj. Contratacion</strong></td>
+                  <td colspan="3" class="tdContent">{{ contrato.txt_objetoContratacion | titlecase }}</td>
+                </tr>
+                <tr>
+                  <td class="label"><strong>Formas de Pago</strong></td>
+                  <td colspan="3" class="tdContent">{{ contrato.txt_detalleFormaPago  | titlecase }}</td>
+                </tr>
+                <tr>
+                  <td class="label"><strong>Garantias</strong></td>
+                  <td colspan="3" class="tdContent">{{ contrato.txt_detalleGarantias  | titlecase }}</td>
+                </tr>
+              </tbody>
+            </table>
+    
+          </mat-expansion-panel>
+    
+    
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Unidad Consolidadora
+              </mat-panel-title>
+              <mat-panel-description>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <table id="responsive-example-table" class="large-only" cellspacing="0">
+              <tbody>
+                <tr>
+                  <td class="label"></td>
+                  <td class="input"></td>
+                  <td class="label"></td>
+                  <td class="input"></td>
+                </tr>
+                <tr>
+                  <td class="label"><strong>Unidad</strong></td>
+                  <td colspan="3" class="tdContent">{{ contrato.txt_nombreUnidad | titlecase }}</td>
+                </tr>
+                <tr>
+                  <td class="label"><strong>Asistente Consolidador</strong></td>
+                  <td colspan="3" class="tdContent">{{contrato.txt_descripcionUnidad | titlecase }}</td>
+                </tr>
+                <tr>
+                  <td class="label"><strong>e-mail</strong></td>
+                  <td colspan="3" class="tdContent">{{contrato.txt_correoUnidad}}</td>
+                </tr>
+              </tbody>
+            </table>
+    
+          </mat-expansion-panel>
+    
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Informaci&oacute;n Referencial
+              </mat-panel-title>
+              <mat-panel-description>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <table id="responsive-example-table" class="large-only" cellspacing="0">
+              <tbody>
+                <tr>
+                  <td class="label"></td>
+                  <td class="input"></td>
+                  <td class="label"></td>
+                  <td class="input"></td>
+                </tr>
+                <tr>
+                  <td class="label"><strong>Nombre Delegado</strong></td>
+                  <td colspan="3" class="tdContent">{{ contrato.txt_nombreDelegado | titlecase }}</td>
+                </tr>
+                <tr>
+                  <td class="label"><strong>Nombre Administrador</strong></td>
+                  <td colspan="3" class="tdContent">{{ contrato.administrador | titlecase  }}</td>
+    
+                </tr>
+                <tr>
+                  <td class="label"><strong>Nombre Tecnico Externo</strong></td>
+                  <td colspan="3" class="tdContent">{{ contrato.txt_nombreTecnicoExterno | titlecase }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </mat-expansion-panel>
+    
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Evidencias
+              </mat-panel-title>
+              <mat-panel-description>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <table id="responsive-example-table" class="large-only" cellspacing="0">
+              <tbody>
+                <tr>
+                  <td class="label"></td>
+                  <td class="input"></td>
+                  <td class="label"></td>
+                  <td class="input"></td>
+                </tr>
+                <tr>
+                  <td class="label"><strong>Archivo</strong></td>
+                  <td colspan="2" class="tdContent">{{nombreArchivo}}</td>
+                  <td class="tdContent"><a (click)="verPdf(contrato.txt_archivoContrato)"><i class="fa fa-file-pdf-o" aria-hidden="true" title="Archivo del Contrato"></i></a></td>
+                </tr>
+              </tbody>
+            </table>
+          </mat-expansion-panel>    
+        </mat-accordion>
+        <br>
+        <div class="example-button-row" *ngIf="closeButtom">
+          <button mat-flat-button color="primary" (click)="closeContract(contrato)">Cerrar Contrato</button>          
+        </div>
+      </div>
+    </div> 
+    
+    <ng-template #noRecord>
+    <div class="col-12 content" >
+      No Se Encontro Informacion
+    </div>
+    </ng-template>
+  </div>
+</div>
+
+
+
+
+
+
+
+    

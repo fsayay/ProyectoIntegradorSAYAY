@@ -1,0 +1,62 @@
+<h6 mat-dialog-title>{{ title }}</h6>
+<mat-dialog-content [formGroup]="formGroup">
+  
+  <div class="row fields-container small" [class.disabled-content]="isDisabled">
+    <div class="col-md-2">
+      <mat-form-field class="example-full-width">
+        <input matInput type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' (change)="updateValue($event.target.value)" placeholder="%" formControlName="qn_porcentajePago">        
+      </mat-form-field>      
+    </div>
+    <div class="col-sm-5">
+      <mat-form-field >
+        <mat-label>Fecha tentativa de Pago</mat-label>
+        <input matInput [matDatepicker]="dt_tentativaPago" formControlName="dt_tentativaPago">
+        <mat-datepicker-toggle matSuffix [for]="dt_tentativaPago"></mat-datepicker-toggle>
+        <mat-datepicker #dt_tentativaPago></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="col-md-5">
+        <mat-form-field>
+          <input matInput type="text" formControlName="vm_montoPago" readonly placeholder="Valor">
+        </mat-form-field>
+    </div>
+    <span style="color: red;"><small> (Solo puede ingresar hasta un {{100 - total}}%) </small></span>
+  </div>
+  <div *ngIf="deleteOption">
+      <div class="row fields-container small">
+        <div class="col-md-2" style="padding: 10px;">
+            <span class="float-left">
+              <a class="text-danger" (click)="deleteCur()">
+                <i class="fa fa-minus-circle fa-1x"></i>
+              </a>
+            </span>
+        </div>        
+        <div class="col-md-5">
+          <mat-form-field class="example-full-width">
+            <input matInput type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="# CUR" formControlName="txt_comprobantePago">
+          </mat-form-field>
+        </div>
+        <div class="col-sm-5">
+          <mat-form-field>
+            <mat-label>Fecha de Pago</mat-label>
+            <input matInput [matDatepicker]="dt_realPago" formControlName="dt_realPago" readonly>
+            <mat-datepicker-toggle matSuffix [for]="dt_realPago"></mat-datepicker-toggle>
+            <mat-datepicker #dt_realPago></mat-datepicker>
+          </mat-form-field>
+        </div>    
+      </div>
+      <app-upload (onUploadFinished)="uploadFinished($event)"></app-upload>
+      <mat-label>{{fileName}}</mat-label>
+      <br>
+  </div>
+  
+
+  
+  
+  
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button [disabled]="formGroup.invalid" color="primary" (click)="save()" cdkFocusInitial>Guardar</button>
+</mat-dialog-actions>
+

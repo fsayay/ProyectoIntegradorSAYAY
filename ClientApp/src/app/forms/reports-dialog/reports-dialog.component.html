@@ -1,0 +1,34 @@
+<mat-card class="contact-card">
+    <mat-card-header>
+      <mat-card-title>{{ title }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form  [formGroup]="formGroup" novalidate (ngSubmit)="onSubmit()">
+        
+        <mat-form-field>
+            <mat-select placeholder="Tipo de Informe" formControlName="qn_tipoInforme">
+                <mat-option *ngFor="let tipo of tiposInforme" value="{{tipo.tipoID}}" (click)="selectedType(tipo)">{{tipo.txt_nombreTipo}}</mat-option>        
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="anotherType">
+          <input matInput placeholder="Nombre del Informe">
+      </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Codigo" formControlName="txt_codigoInforme">
+        </mat-form-field>
+        
+        <mat-form-field>
+            <input matInput [matDatepicker]="fechaSubs1" placeholder="Fecha de Informe" readonly formControlName="dt_fechaInforme">
+            <mat-datepicker-toggle matSuffix [for]="fechaSubs1"></mat-datepicker-toggle>
+            <mat-datepicker #fechaSubs1 disabled="false"></mat-datepicker>
+        </mat-form-field>             
+
+        <app-upload (onUploadFinished)="uploadFinished($event)"></app-upload>
+        <mat-label>{{fileName}}</mat-label>
+      <br>
+        <button id="submit" mat-raised-button type="submit" [disabled]="formGroup.invalid" color="primary">Guardar</button>
+      </form>
+    </mat-card-content>
+</mat-card>

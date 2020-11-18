@@ -1,0 +1,130 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+<mat-dialog-content [formGroup]="formGroup">
+  <mat-form-field>
+    <mat-select placeholder="Tipo de Pago" formControlName="qn_tipoPago">
+      <mat-option *ngFor="let tipo of tiposPago" (click)="setTipoPago(tipo)" value="{{tipo.tipoID}}">{{tipo.txt_nombreTipo}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Cuando la opcion es Contra Entrega-->
+  <div *ngIf="!esParcial">
+    <div formArrayName="pagos" *ngFor="let pago of formGroup.get('pagos').controls; let i = index;">
+      <div class="form-group" [formGroupName]="i">
+        <div class="row fields-container small">
+          <div class="col-md-2">
+            <mat-form-field class="example-full-width">
+              <input matInput [value]="numeroPago" type="text" readonly placeholder="# de Pago" formControlName="qn_numeroPago">
+            </mat-form-field>
+          </div>
+          <div class="col-md-2">
+            <mat-form-field class="example-full-width">
+              <input matInput [value]="porcentajeContraEntrega" type="text" readonly placeholder="%" formControlName="qn_porcentajePago">
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field>
+              <input type="number" formControlName="vm_montoPago" matInput readonly placeholder="Monto Pago">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-5">
+            <mat-form-field>
+              <mat-label>Fecha tentativa de Pago</mat-label>
+              <input matInput [matDatepicker]="dt_tentativaPago" formControlName="dt_tentativaPago" readonly>
+              <mat-datepicker-toggle matSuffix [for]="dt_tentativaPago"></mat-datepicker-toggle>
+              <mat-datepicker #dt_tentativaPago></mat-datepicker>
+            </mat-form-field>
+          </div>            
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cuando la opcion es Anticipo -->
+  <div *ngIf="false">
+    <div formArrayName="pagos" *ngFor="let pago of formGroup.get('pagos').controls; let i = index;">
+      <div class="form-group" [formGroupName]="i">
+        <div class="row fields-container small">
+          <div class="col-md-2">
+            <mat-form-field class="example-full-width">
+              <input matInput type="text" placeholder="# de Pago" value="i">
+            </mat-form-field>
+          </div>
+          <div class="col-md-2">
+            <mat-form-field class="example-full-width">
+              <input matInput type="text" placeholder="%" formControlName="qn_porcentajePago">
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field>
+              <input type="number" formControlName="vm_montoPago" matInput readonly placeholder="Monto Anticipo">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-5">
+            <mat-form-field>
+              <mat-label>Fecha tentativa de Pago</mat-label>
+              <input matInput [matDatepicker]="dt_tentativaPago" formControlName="dt_tentativaPago" readonly>
+              <mat-datepicker-toggle matSuffix [for]="dt_tentativaPago"></mat-datepicker-toggle>
+              <mat-datepicker #dt_tentativaPago></mat-datepicker>
+            </mat-form-field>
+          </div>            
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cuando la forma de pago es Parcial-->
+  <div *ngIf="esParcial">
+    <span style="color: red;"><small> (Ingrese solo números que en total sume el 100%) </small></span>
+    <div class="row fields-container small">
+      <label class="col-sm-4"><strong>Agregar Pagos</strong></label>
+      <div class="col-sm-2">
+        <span class="float-left">
+          <a class="text-warning" (click)="agregarPago()">
+            <i class="fa fa-fw fa-plus fa-2x" aria-hidden="true"></i>
+          </a>
+        </span>
+      </div>
+    </div>    
+    <div formArrayName="pagos" *ngFor="let pago of formGroup.get('pagos').controls; let i = index;">
+      <div class="form-group" [formGroupName]="i">
+        <div class="row fields-container small">
+          <div class="col-md-1" style="padding: 10px;">
+            <span class="float-left">
+              <a class="text-danger" (click)="eliminarFormPagos(i)">
+                <i class="fa fa-minus-circle fa-1x"></i>
+              </a>
+            </span>
+          </div>
+          <div class="col-md-2">
+            <mat-form-field class="example-full-width">
+              <input matInput type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="%" (change)="updateValue($event.target.value, i)" formControlName="qn_porcentajePago">
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <mat-form-field>
+              <input matInput type="text" formControlName="vm_montoPago" readonly placeholder="Valor">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-4">
+            <mat-form-field>
+              <mat-label>Fecha de Pago</mat-label>
+              <input matInput [matDatepicker]="dt_tentativaPago" formControlName="dt_tentativaPago" readonly>
+              <mat-datepicker-toggle matSuffix [for]="dt_tentativaPago"></mat-datepicker-toggle>
+              <mat-datepicker #dt_tentativaPago></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-2" *ngIf="i===0">
+            <mat-checkbox class="example-margin" formControlName="bol_esAnticipo">Anticipo?</mat-checkbox>
+          </div>
+        </div>
+      </div>
+    
+    </div>
+    <div *ngIf="totalPorcentaje !== 0 " class="col-sm-12 text-center total"> Total: {{ totalPorcentaje }} %</div>
+  </div>
+  
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button [disabled]="formGroup.invalid" color="primary" (click)="save()" cdkFocusInitial>Guardar</button>
+</mat-dialog-actions>

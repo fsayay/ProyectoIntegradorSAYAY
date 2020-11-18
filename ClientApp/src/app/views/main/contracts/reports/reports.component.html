@@ -1,0 +1,86 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-2">
+      <app-main-menu></app-main-menu>
+    </div>
+    <div class="col-10 content">
+      <div class="title borde-title">
+        <a data-target="#sidebar" data-toggle="collapse" class="d-md-none"><i class="fa fa-bars"></i></a><a [routerLink]="['/Lista-Contratos']"> Contratos </a> / Informes
+      </div>
+
+      <div class="content-section" *ngIf="dataSource.data; else noRecord">
+        <span class="float-left col-md-4">
+          <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar Informe...">
+          </mat-form-field>
+        </span>
+        
+        <span *ngIf="userAuth.rol=='Administrador-Contrato' && contratoActivo.qn_estadoContrato==20" class="table-add float-right mb-0 mr-0">
+          <a class="text-warning" (click)="openFormDialog()">
+            <i class="fa fa-fw fa-plus fa-2x" aria-hidden="true" title="Agregar Nuevo Informe"></i>
+          </a>
+        </span>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z1">
+         '', 'tipoInforme', 'dt_fechaInforme', 'txt_archivoInforme', 'Modificar', 'Eliminar'
+          <!-- Columna Codigo -->
+          <ng-container matColumnDef="txt_codigoInforme">
+            <th mat-header-cell *matHeaderCellDef> Cod. </th>
+            <td mat-cell *matCellDef="let row"> {{row.txt_codigoInforme}} </td>
+          </ng-container>
+    
+          <!-- Columna Tipo de Informe -->
+          <ng-container matColumnDef="tipoInforme">
+            <th mat-header-cell *matHeaderCellDef> Tipo </th>
+            <td mat-cell *matCellDef="let row"> {{row.tipoInforme}} </td>
+          </ng-container>
+    
+          <!-- Columna Fecha de Informe -->
+          <ng-container matColumnDef="dt_fechaInforme">
+            <th mat-header-cell *matHeaderCellDef> Fecha </th>
+            <td mat-cell *matCellDef="let row"> {{row.dt_fechaInforme | date: 'dd-MM-yyyy'}} </td>
+          </ng-container>
+
+          <!-- Columna PDF -->
+          <ng-container matColumnDef="txt_archivoInforme">
+            <th mat-header-cell *matHeaderCellDef> PDF </th>
+            <td mat-cell *matCellDef="let row">
+              <a (click)="verPdf(row.txt_archivoInforme)"><i class="fa fa-file-pdf-o" aria-hidden="true" title="Archivo del Informe"></i></a>
+            </td>
+          </ng-container>
+
+          <div *ngIf="userAuth.rol=='Administrador-Contrato'">
+                <!-- Columna Modificar -->
+            <ng-container matColumnDef="Modificar">
+              <th mat-header-cell *matHeaderCellDef style="text-align: center;" > Modificar</th>
+              <td mat-cell *matCellDef="let row" style="text-align: center;" >
+                <a (click)="openFormDialog(row)"><i class="fa fa-pencil" aria-hidden="true" title="Modificar la Garant&iacute;a"></i></a>
+              </td>
+            </ng-container>
+
+            <!-- Columna Eliminar -->
+            <ng-container matColumnDef="Eliminar">
+              <th mat-header-cell *matHeaderCellDef style="text-align: center;" > Eliminar</th>
+              <td mat-cell *matCellDef="let row" style="text-align: center;" >
+                <a (click)="deleteConfirm(row.id)"><i class="fa fa-trash" aria-hidden="true" title="Eliminar la Garant&iacute;a"></i></a>
+              </td>
+            </ng-container>
+          </div>
+          
+              
+          <tr mat-header-row *matHeaderRowDef="displayedColumns" class="encabezado"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr> <!-- (click)="selection.toggle(row)"> -->
+    
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      </div>    
+    
+      <ng-template #noRecord>No Se Encontro Informacion
+          <span *ngIf="userAuth.rol=='Administrador-Contrato'" class="table-add float-left mb-0 mr-0">
+            <a class="text-warning" (click)="openFormDialog()">
+              <i class="fa fa-fw fa-plus fa-2x" aria-hidden="true" title="Agregar Primer Informe"></i>
+            </a>
+          </span>
+      </ng-template>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,126 @@
+<div class="example-container">
+
+    <h2 mat-dialog-title>{{ titulo }}</h2>
+  
+    <mat-dialog-content [formGroup]="formGroup">
+  
+      <mat-form-field>
+        <mat-select placeholder="Tipo de Modificaci&oacute;n" formControlName="qn_tipoModificacion">
+          <mat-option *ngFor="let tipo of tiposModificacion" (click)="setTipoPago(tipo)"  value="{{tipo.tipoID}}">{{tipo.txt_nombreTipo}}</mat-option>        
+        </mat-select>
+      </mat-form-field>
+
+      <br>
+      <br><br>
+
+      <div *ngIf="is_complementario">       
+        <div class="row fields-container small">
+          <div class="col-md-6">
+            <mat-checkbox class="example-margin" (change)="onChange($event); false">Modificar Monto</mat-checkbox>
+          </div>
+        </div>
+        <div class="row fields-container small">
+          <div class="col-md-5">
+            <mat-form-field>
+              <input matInput placeholder="Monto Actual" readonly formControlName="vm_valorActual">
+            </mat-form-field>
+          </div>
+          <div class="col-md-2">
+            <mat-form-field>
+              <input matInput readonly onkeypress='return event.charCode >= 48 && event.charCode <= 57' [readOnly]="readonly" placeholder="% Incremento" (change)="updateValue($event.target.value)">
+            </mat-form-field>
+          </div>
+          <div class="col-md-5">
+            <mat-form-field>
+              <input matInput [value]="cantidad" readonly onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Monto Incremento">
+            </mat-form-field>
+          </div>
+        </div>
+    
+        <div class="row fields-container small">
+          <div class="col-md-6">
+            <mat-checkbox class="example-margin" (change)="onChange2($event); false">Modificar Plazo</mat-checkbox>
+          </div>
+        </div>
+        <div class="row fields-container small">
+          <div class="col-md-5">
+            <mat-form-field>
+              <input matInput placeholder="Fecha Actual" readonly formControlName="dt_fechaActual">
+            </mat-form-field>
+          </div>
+          <div class="col-md-2">
+            <mat-form-field>
+              <input matInput readonly onkeypress='return event.charCode >= 48 && event.charCode <= 57' [readOnly]="readonlydias" placeholder="Días Prorroga" (change)="updateProrroga($event.target.value)" formControlName="diasProrroga">
+            </mat-form-field>
+          </div>
+          <div class="col-md-5">
+            <mat-form-field>
+              <input matInput placeholder="Nueva Fecha" readonly formControlName="dt_fechaNuevo">
+            </mat-form-field>
+          </div>
+        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Motivo de la Modificaci&oacute;n</mat-label>
+          <textarea matInput formControlName="txt_motivoModificacion"></textarea>
+        </mat-form-field>
+  
+        <app-upload (onUploadFinished)="uploadFinished($event)"></app-upload>
+      </div>
+
+      <div *ngIf="is_changeOrder">
+        <div class="row fields-container small">
+          <div class="col-md-6">
+            <mat-form-field>
+              <input matInput placeholder="Monto Real del Contrato" readonly formControlName="vm_valorActual">
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field>
+              <input matInput [value]="cantidad"  placeholder="Monto estimado final del Contrato" onkeypress='return event.charCode >= 48 && event.charCode <= 57' (change)="updateValue($event.target.value)" formControlName="vm_valorNuevo">
+            </mat-form-field>
+          </div>
+        </div>
+    
+        <mat-form-field appearance="outline">
+          <mat-label>Motivo de la Modificaci&oacute;n</mat-label>
+          <textarea matInput formControlName="txt_motivoModificacion"></textarea>
+        </mat-form-field>
+  
+        <app-upload (onUploadFinished)="uploadFinished($event)"></app-upload>
+      </div>
+
+      <div *ngIf="is_workOrder">
+        <mat-form-field appearance="outline">
+          <mat-label>Nuevo Rubro</mat-label>
+          <input matInput [value]="cantidad" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Valor" (change)="updateValue($event.target.value)" formControlName="vm_valorNuevo"/>
+        </mat-form-field>
+            
+        <mat-form-field appearance="outline">
+          <mat-label>Motivo de la Modificaci&oacute;n</mat-label>
+          <textarea matInput formControlName="txt_motivoModificacion"></textarea>
+        </mat-form-field>
+  
+        <app-upload (onUploadFinished)="uploadFinished($event)"></app-upload>
+      </div>
+
+      <div *ngIf="is_modificatorio">
+        <mat-form-field appearance="outline">
+          <mat-label>Motivo de la Modificaci&oacute;n</mat-label>
+          <textarea matInput formControlName="txt_motivoModificacion"></textarea>
+        </mat-form-field>
+  
+        <app-upload (onUploadFinished)="uploadFinished($event)"></app-upload>
+      </div>     
+  
+    </mat-dialog-content>
+  
+    <mat-dialog-actions>
+      <button class="mat-raised-button" (click)="close()">Cancelar</button>
+      <button class="mat-raised-button mat-primary" [disabled]="formGroup.invalid" (click)="save()">Guardar</button>
+    </mat-dialog-actions>
+  
+  
+  </div>
+  
+  
+  

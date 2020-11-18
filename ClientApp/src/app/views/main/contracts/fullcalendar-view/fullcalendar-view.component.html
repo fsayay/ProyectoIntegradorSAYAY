@@ -1,0 +1,18 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-2">
+        <app-main-menu></app-main-menu>
+      </div>
+      <div class="col-10 content">
+        <div class="title borde-title">
+          <a data-target="#sidebar" data-toggle="collapse" class="d-md-none"><i class="fa fa-bars"></i></a><a [routerLink]="['/Lista-Contratos']" [routerLinkActive]="'active'"> Contratos </a><a (click)="return()" [routerLinkActive]="'active'">/ Vencimientos </a> / Calendario de Notificaciones
+        </div>
+        <div class="content-section">
+            <full-calendar style="color: rgb(4, 12, 121);"
+              deepChangeDetection="true"
+              [options]="calendarOptions">
+            </full-calendar>
+         </div> 
+      </div>
+    </div>
+</div>

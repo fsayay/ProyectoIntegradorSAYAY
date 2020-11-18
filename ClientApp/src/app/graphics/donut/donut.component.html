@@ -1,0 +1,36 @@
+<h5 style="text-align:center">Montos Reales y Complementarios por Año</h5>
+<div class="row">
+    <div class="col-lg-2">
+        <mat-form-field>
+            <mat-select placeholder="Por Año">
+              <mat-option *ngFor="let year of years" value="{{year}}" (click)="selectYear(year)">
+                {{year}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+    </div>
+    <div class="col-lg-8">
+        <canvas baseChart width="250" height="100"
+                    [data]="demodoughnutChartData"
+                    [labels]="doughnutChartLabels"
+                    [options]="donutChartOptions"
+                    [colors]="donutChartColors"
+                    [chartType]="doughnutChartType">
+        </canvas>
+    </div>
+    <div class="col-lg-2 borde">
+      <br>
+      <mat-form-field class="example-full-width" (click)="disabled=false" (mouseout)="disabled=true">
+        <input matInput placeholder="Monto Real" currencyMask [(ngModel)]="montoReal" [attr.disabled]="true">
+        <!--input matInput placeholder="Monto Real" currencyMask [(ngModel)]="montoReal" [attr.disabled]="disabled?'':null"-->
+      </mat-form-field>
+      <br>
+      <mat-form-field class="example-full-width" (click)="disabled=false" (mouseout)="disabled=true">
+        <input matInput placeholder="Monto Complementario" currencyMask [(ngModel)]="montoComplementario" [attr.disabled]="true">
+      </mat-form-field>
+      <br>
+      <mat-form-field class="example-full-width" (click)="disabled=false" (mouseout)="disabled=true">
+        <input matInput placeholder="Monto Total Anual" currencyMask [(ngModel)]="montoTotal" [attr.disabled]="true">
+      </mat-form-field>
+    </div>
+</div>

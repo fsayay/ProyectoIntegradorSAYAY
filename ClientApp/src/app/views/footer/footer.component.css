@@ -1,0 +1,18 @@
+.footer{
+    position: fixed;
+    bottom: 0px;
+    height: 90px;
+    width: 100%;
+    margin-top: 20px;
+    border-top: 2px solid #d7ab28;
+    background-color: #fff;
+}
+
+.box-shadow {
+    box-shadow: 0 -5px 5px -5px #1e3467;
+}
+
+p {
+    color: #828282;
+    margin-top: 20px;
+}

@@ -1,0 +1,19 @@
+<mat-card class="contact-card">
+  <mat-card-header>
+    <mat-card-title>{{title}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="formGroup" novalidate (ngSubmit)="onSubmit()" >
+      <mat-form-field>
+        <input matInput placeholder="Nombre de Tipo"  class="form-control" [ngClass]="{'is-invalid': !formGroup.get('txt_nombreTipo').valid}" formControlName="txt_nombreTipo">       
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <textarea rows="4" cols="50" matInput placeholder="Breve Descripción" class="form-control" [ngClass]="{'is-invalid': !formGroup.get('txt_detalleTipo').valid}" formControlName="txt_detalleTipo"></textarea>
+      </mat-form-field>
+      <br>
+      <button id="submit" mat-raised-button type="submit" [disabled]="formGroup.invalid" color="primary">Guardar</button>
+ 
+    </form>
+  </mat-card-content>
+</mat-card>

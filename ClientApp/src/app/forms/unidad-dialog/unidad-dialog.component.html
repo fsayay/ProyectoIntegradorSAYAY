@@ -1,0 +1,25 @@
+<mat-card class="contact-card">
+    <mat-card-header>
+      <mat-card-title>{{title}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="formGroup" novalidate (ngSubmit)="onSubmit()" >
+        <mat-form-field>
+            <input matInput placeholder="Nombre de la Unidad Consolidadora"  class="form-control" [ngClass]="{'is-invalid': !formGroup.get('txt_nombreUnidad').valid}" formControlName="txt_nombreUnidad">            
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <textarea rows="4" cols="50" matInput placeholder="Breve descripción" class="form-control" [ngClass]="{'is-invalid': !formGroup.get('txt_descripcionUnidad').valid}" formControlName="txt_descripcionUnidad"></textarea>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <input matInput placeholder="Correo de la Unidad Consolidadora"  class="form-control" [ngClass]="{'is-invalid': !formGroup.get('txt_correoUnidad').valid}" formControlName="txt_correoUnidad">
+        </mat-form-field>
+        <br>
+        
+        
+        <button id="submit" mat-raised-button type="submit" [disabled]="formGroup.invalid" color="primary">Guardar</button>
+      </form>
+    </mat-card-content>
+</mat-card>
+

@@ -1,0 +1,68 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-2">
+      <app-main-menu></app-main-menu>
+    </div>
+    <div class="col-10 content">
+      <div class="title borde-title">
+        <a data-target="#sidebar" data-toggle="collapse" class="d-md-none"><i class="fa fa-bars"></i></a><a [routerLink]="['/Lista-Contratos']"> Contratos </a> / Multas
+      </div>
+      <!--
+      <div class="content-section"  *ngIf="dataSource.data?.length; else noRecord">  
+      -->
+      <div class="content-section" *ngIf="dataSource.data; else noRecord">
+        <span class="float-left col-md-4">
+          <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar Multa...">
+          </mat-form-field>
+        </span>
+        
+        <span *ngIf="userAuth.rol=='Administrador-Contrato' && contratoActivo.qn_estadoContrato==20" class="table-add float-right mb-0 mr-0">
+          <a class="text-warning" (click)="openFormDialog()">
+            <i class="fa fa-fw fa-plus fa-2x" aria-hidden="true" title="Agregar Nueva Multa"></i>
+          </a>
+        </span>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z1">
+         
+          <!-- Columna Codigo -->
+          <ng-container matColumnDef="{{columnas[0].name}}">
+            <th mat-header-cell *matHeaderCellDef > {{ columnas[0].title }}</th>
+            <td mat-cell *matCellDef="let row"> {{row[columnas[0].name]}} </td>
+          </ng-container>
+    
+          <!-- Columna Objeto Contratacion -->
+          <ng-container matColumnDef="{{columnas[1].name}}">
+            <th mat-header-cell *matHeaderCellDef > {{ columnas[1].title }}</th>
+            <td mat-cell *matCellDef="let row"> {{row[columnas[1].name]}} </td>
+          </ng-container>
+    
+          <!-- Columna Monto Contrato -->
+          <ng-container matColumnDef="{{columnas[2].name}}">
+            <th mat-header-cell *matHeaderCellDef > {{ columnas[2].title }}</th>
+            <td mat-cell *matCellDef="let row"> {{row[columnas[2].name] | currency}} </td>
+          </ng-container>
+    
+          <!-- Columna Fecha Inicio Contrato -->
+          <ng-container matColumnDef="{{columnas[3].name}}">
+            <th mat-header-cell *matHeaderCellDef > {{ columnas[3].title }}</th>
+            <td mat-cell *matCellDef="let row"> {{row[columnas[3].name] | date: 'dd-MM-yyyy'}} </td>
+          </ng-container>
+        
+          <tr mat-header-row *matHeaderRowDef="displayedColumns" class="encabezado"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr> <!-- (click)="selection.toggle(row)"> -->
+    
+        </table>
+        <mat-paginator [pageSizeOptions]="[1, 10, 20]" showFirstLastButtons></mat-paginator>
+      </div>
+        
+      <ng-template #noRecord>
+          No Se Encontro Informacion
+          <span *ngIf="userAuth.rol=='Administrador-Contrato'" class="table-add float-left mb-0 mr-0">
+            <a class="text-warning" (click)="openFormDialog()">
+              <i class="fa fa-fw fa-plus fa-2x" aria-hidden="true" title="Agregar Primera Multa"></i>
+            </a>
+          </span>        
+      </ng-template>
+    </div>
+  </div>
+</div>

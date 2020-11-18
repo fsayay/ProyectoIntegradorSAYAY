@@ -1,0 +1,19 @@
+
+  <table class="table table-striped-sm table-hover text-center" *ngIf="informeMultas != ''">
+    <thead>
+      <tr>
+        <th scope="col">C&oacute;digo</th>
+        <th scope="col">Tipo de Informe</th>
+        <th scope="col">Fecha de Informe</th>        
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor=" let informe of informeMultas "  (click)="submitForm(informe.txt_codigoInforme)">
+        <td>{{ informe.txt_codigoInforme }}</td>
+        <td>{{ informe.tipoInforme }}</td>
+        <td>{{ informe.dt_fechaInforme | date: 'dd-MM-yyyy'  }}</td>        
+      </tr>
+    </tbody>
+  </table>
+  <span *ngIf="informeMultas == ''"> No Existen Informes de Multas a&uacute;n</span>
+  

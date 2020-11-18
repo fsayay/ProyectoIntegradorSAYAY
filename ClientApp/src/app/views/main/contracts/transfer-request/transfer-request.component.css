@@ -1,0 +1,55 @@
+.example-button-row button, example-button-row a{
+    margin-right: 8px;
+}
+
+/*                                          */
+.example-container {
+  flex-direction: column;
+  min-width: 300px;
+}
+
+.example-header {
+  min-height: 64px;
+  padding: 8px 24px 0;
+}
+
+.mat-form-field {
+  font-size: 12px;
+  width: 50%;
+}
+
+.mat-table {
+  overflow: initial;
+}
+
+.mat-row:nth-child(even) {
+  /*background-color: rgb(250, 212, 212)*/
+  background-color: #fbfbfb;
+}
+
+.mat-row:nth-child(odd) {
+  /*background-color: rgb(247, 241, 241)*/
+  background-color: #f2f2f2;
+}
+
+.mat-row:hover,
+.mat-row:focus {
+  outline: none;
+  background-color: #9ba8be !important;
+  color: #f2f2f2;
+}
+
+.encabezado {
+  font-size: 16px;
+  text-decoration-color: #f2f2f2;
+  background-color: #0c1767;
+  /*background-color: lightcoral;*/
+}
+
+.mat-header-cell {
+  color: white;
+}
+
+::ng-deep .mat-checkbox-frame {
+  border-color: black
+}

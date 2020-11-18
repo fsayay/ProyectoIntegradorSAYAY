@@ -1,0 +1,20 @@
+<mat-card class="contact-card">
+    <mat-card-header>
+      <mat-card-title>Archivo del Entregable</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form  [formGroup]="formGroup" novalidate (ngSubmit)="onSubmit()">
+         
+        <mat-form-field>
+          <input matInput [matDatepickerFilter]="filtro" [min]="minDate" [max]="maxDate" [matDatepicker]="fechaSubs1" placeholder="Fecha de Entrega" readonly formControlName="dt_fechaRealEntregable">
+          <mat-datepicker-toggle matSuffix [for]="fechaSubs1"></mat-datepicker-toggle>
+          <mat-datepicker  startView="year" #fechaSubs1 disabled="false"></mat-datepicker>
+        </mat-form-field> 
+
+        <app-upload (onUploadFinished)="uploadFinished($event)"></app-upload>
+        
+        <button id="submit" mat-raised-button type="submit" [disabled]="formGroup.invalid" color="primary">Guardar</button>
+      </form>
+    </mat-card-content>
+</mat-card>
+

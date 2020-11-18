@@ -1,0 +1,14 @@
+[
+    {
+        "id": "1",
+        "nombre": "FICT",
+        "descripcion": "Unidad especializada en la compra de equipos para excavacion",
+        "email": "fict@espol.edu.ec"
+    },
+    {
+        "id": "2",
+        "nombre": "FIEC",
+        "descripcion": "Unidad especializada en la compra de equipos tecnologicos",
+        "email": "fiec@espol.edu.ec"
+    }
+]

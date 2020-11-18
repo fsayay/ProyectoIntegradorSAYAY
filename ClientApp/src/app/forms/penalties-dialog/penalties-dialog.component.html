@@ -1,0 +1,37 @@
+<mat-card class="contact-card">
+    <mat-card-header>
+      <mat-card-title>{{ title }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form  [formGroup]="formGroup" novalidate (ngSubmit)="onSubmit()">
+        
+        <mat-form-field>
+            <mat-select placeholder="Tipo de Multa" formControlName="qn_tipoMulta">
+                <mat-option *ngFor="let tipo of tiposMulta" value="{{tipo.tipoID}}">{{tipo.txt_nombreTipo}}</mat-option>        
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Informe de Multa" readonly formControlName="txt_codigoInforme" (click)="openPenaltyReports()">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput [value]="cantidad" type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Valor de Multa" (change)="updateValue($event.target.value)" formControlName="vm_montoMulta">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Motivo de Multa</mat-label>
+            <textarea matInput formControlName="txt_motivoMulta"></textarea>
+        </mat-form-field>
+        
+        <mat-form-field>
+            <input matInput [matDatepicker]="fechaSubs1" placeholder="Fecha" readonly formControlName="dt_fechaMulta">
+            <mat-datepicker-toggle matSuffix [for]="fechaSubs1"></mat-datepicker-toggle>
+            <mat-datepicker #fechaSubs1 disabled="false"></mat-datepicker>
+        </mat-form-field>        
+
+        <button id="submit" mat-raised-button type="submit" [disabled]="formGroup.invalid" color="primary">Guardar</button>
+      </form>
+    </mat-card-content>
+</mat-card>
+

@@ -1,0 +1,29 @@
+<h5 style="text-align:center">Contratos Finalizados en el Portal por Año</h5>
+  <div class="row">
+    <div class="col-lg-2">
+      <mat-form-field>
+        <mat-select placeholder="Por Año">
+          <mat-option *ngFor="let year of years" value="{{year}}" (click)="selectYear(year)">
+            {{year}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-lg-8">
+      <canvas baseChart width="250" height="100"
+              [data]="demodoughnutChartData"
+              [labels]="doughnutChartLabels"
+              [options]="donutChartOptions"
+              [colors]="donutChartColors"
+              [chartType]="doughnutChartType"
+    ></canvas>
+    </div>
+    <div class="col-lg-2 borde">
+      <br>
+      <!--mat-form-field class="example-full-width" (click)="disabled=false" (mouseout)="disabled=true"-->
+      <!--mat-form-field class="example-full-width">
+        <input matInput placeholder="# Complementarios" value="Sushi"
+              [attr.disabled]="true">
+      </mat-form-field-->
+    </div>
+  </div>

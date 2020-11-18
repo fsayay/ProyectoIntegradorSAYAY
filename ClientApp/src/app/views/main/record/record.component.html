@@ -1,0 +1,96 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-2">
+      <app-main-menu></app-main-menu>
+    </div>
+    <div class="col-10 content">
+      <div class="title borde-title">
+        <a data-target="#sidebar" data-toggle="collapse" class="d-md-none"><i class="fa fa-bars"></i></a>Historial
+      </div>
+      <div class="content-section">
+        
+        <mat-form-field>
+          <mat-label>Buscar Contrato</mat-label>
+          <input matInput (keyup)="applyFilter($event.target.value)" #input>
+        </mat-form-field>
+
+        <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows class="mat-elevation-z1">     
+         
+          <ng-container matColumnDef="txt_codigoContrato">
+            <th mat-header-cell *matHeaderCellDef> C&oacute;digo </th>
+            <td mat-cell *matCellDef="let elemento"> {{ elemento.txt_codigoContrato }} </td>
+          </ng-container>
+          <ng-container matColumnDef="txt_objetoContratacion">
+            <th mat-header-cell *matHeaderCellDef> Objeto Contrataci&oacute;n </th>
+            <td mat-cell *matCellDef="let elemento"> {{elemento.txt_objetoContratacion}} </td>
+          </ng-container>
+          <ng-container matColumnDef="txt_nombreProveedor">
+            <th mat-header-cell *matHeaderCellDef> Proveedor </th>
+            <td mat-cell *matCellDef="let elemento"> {{elemento.txt_nombreProveedor}} </td>
+          </ng-container>
+          <ng-container matColumnDef="vm_montoAdjudicado">
+            <th mat-header-cell *matHeaderCellDef> Monto </th>
+            <td mat-cell *matCellDef="let elemento"> {{elemento.vm_montoAdjudicado}} </td>
+          </ng-container>
+          <ng-container matColumnDef="txt_nombre">
+            <th mat-header-cell *matHeaderCellDef> Administrador </th>
+            <td mat-cell *matCellDef="let elemento"> {{ elemento.txt_nombre | titlecase}} </td>
+          </ng-container>
+
+          <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+          <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let row" [attr.colspan]="columnsToDisplay.length">
+              <div class="example-element-detail" [@detailExpand]="row == expandedElement ? 'expanded' : 'collapsed'">
+                
+                <p *ngIf="!(tempHistorial && tempHistorial.length)">
+                  No Existen Datos que Mostrar
+                </p>
+                <div *ngIf="tempHistorial && tempHistorial.length" id="right">
+                  <div class="col-sm-12">
+                    <h2>Historial</h2>
+                  </div>
+                  <div class="col-sm-12 table-responsive.lg">
+                    <table class="table table-striped-sm table-hover text-center">
+                      <thead class="thead-dark">
+                        <tr>
+                          <th scope="col">Fecha</th>
+                          <th scope="col">Hora</th>
+                          <th scope="col">Accion</th>
+                          <th scope="col"></th>
+                          <th scope="col"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let hist of tempHistorial ">
+                          <td>{{ hist.dt_fechaUltimoCambio | date:'EEEE, d MMMM, yyyy'}}</td>
+                          <td>{{ hist.dt_fechaUltimoCambio | date:'h:mm a' }}</td>
+                          <td colspan="3">{{ hist.txt_accionHistorial }}</td>                  
+                        </tr>
+                      </tbody>
+                    </table>
+    
+                  </div>
+                </div>
+                
+                
+
+              </div>
+            </td>
+          </ng-container>
+
+
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplay"  class="encabezado"></tr>
+          <tr mat-row *matRowDef="let elemento; columns: columnsToDisplay;" class="example-element-row" [class.example-expanded-row]="expandedElement === elemento" (click)="cambiar(elemento)" (click)="expandedElement = expandedElement === elemento ? null : elemento"></tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      </div>
+    </div>    
+    
+    <ng-template #noRecord>
+      <div class="col-10 content" >
+        No Se Encontro Informacion
+      </div>
+    </ng-template>
+  </div>
+</div>

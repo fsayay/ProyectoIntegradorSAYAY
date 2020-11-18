@@ -1,0 +1,67 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-2">
+      <app-main-menu></app-main-menu>
+    </div>
+    <div class="col-10 content">
+      <div class="title borde-title">
+        <a data-target="#sidebar" data-toggle="collapse" class="d-md-none"><i class="fa fa-bars"></i></a><a [routerLink]="['/Lista-Contratos']"> Contratos </a> / Vencimientos <a (click)="calendarView()"><i class="fa fa-calendar" aria-hidden="true" title="Calendario de Vencimientos"></i></a>
+      </div>
+      <div class="content-section"  *ngIf="dataSource.data; else noRecord">
+        <span class="float-left col-md-4">
+          <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar Vencimiento...">
+          </mat-form-field>
+        </span>
+        
+        <span *ngIf="userAuth.rol=='Administrador-Contrato' && contratoActivo.qn_estadoContrato==20" class="table-add float-right mb-0 mr-0">
+          <a class="text-warning" (click)="openFormDialog()">
+            <i class="fa fa-fw fa-plus fa-2x" aria-hidden="true" title="Agregar Nuevo Contrato"></i>
+          </a>
+        </span>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z1">
+         
+          <!-- Columna Categoria -->
+          <ng-container matColumnDef="Seccion">
+            <th mat-header-cell *matHeaderCellDef > Secci&oacute;n </th>
+            <td mat-cell *matCellDef="let row"> {{ row.Seccion }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Tipo">
+            <th mat-header-cell *matHeaderCellDef > Tipo </th>
+            <td mat-cell *matCellDef="let row"> {{ row.Tipo }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Fecha">
+            <th mat-header-cell *matHeaderCellDef > Fecha </th>
+            <td mat-cell *matCellDef="let row"> {{ row.Fecha | date: 'dd-MM-yyyy'  }} </td>
+          </ng-container>
+          
+          <ng-container matColumnDef="Anticipacion">
+            <th mat-header-cell *matHeaderCellDef > Anticipaci&oacute;n (d&iacute;as)</th>
+            <td mat-cell *matCellDef="let row"> {{ row.Anticipacion }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Frecuencia">
+            <th mat-header-cell *matHeaderCellDef > Frecuencia (d&iacute;as)</th>
+            <td mat-cell *matCellDef="let row"> {{ row.Frecuencia }} </td>
+          </ng-container>
+    
+    
+          <tr mat-header-row *matHeaderRowDef="displayedColumns" class="encabezado"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>        
+      </div>    
+      <ng-template #noRecord>
+          No Se Encontro Informacion
+          <span *ngIf="userAuth.rol=='Administrador-Contrato'" class="table-add float-left mb-0 mr-0">
+            <a class="text-warning" (click)="openFormDialog()">
+              <i class="fa fa-fw fa-plus fa-2x" aria-hidden="true" title="Agregar Primer Vencimiento"></i>
+            </a>
+          </span>
+      </ng-template>
+    </div>
+  </div>
+</div>

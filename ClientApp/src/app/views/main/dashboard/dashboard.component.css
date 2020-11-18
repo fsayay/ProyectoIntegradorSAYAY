@@ -1,0 +1,33 @@
+.flex-row {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    padding-bottom: 20px;
+}
+    
+.flex-row-item.uno {
+    width: 100%;
+}
+
+.flex-row-item.dos {
+    width: 50%;
+}
+
+.flex-row-item mat-card {
+    margin-right: 10px;
+}
+
+.flex-row-item:last-child mat-card {
+    margin-right: 0px;
+}
+
+/*//////////////////////////////////////*/
+.example-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    height: 250px;
+    width: 100%;
+  }
+  

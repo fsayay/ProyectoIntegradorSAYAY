@@ -1,0 +1,95 @@
+<mat-card class="contact-card">
+  <mat-card-header>
+    <mat-card-title>{{ title }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div  *ngIf="formasPago != '' || entregables != '' ">
+      <form  [formGroup]="formGroup" novalidate (ngSubmit)="onSubmit()" >
+        <div *ngIf="formasPago && formasPago != ''">
+          <div class="col-md-6">
+            <mat-checkbox class="example-margin" (change)="onChangePay($event); false">Formas de Pago</mat-checkbox>
+          </div>
+          <div  [class.disabled-content]="isDisabledPay">
+            
+            <div formArrayName="vencimientoPagos" *ngFor="let vencimiento of formGroup.get('vencimientoPagos').controls; let i = index;">
+              <div class="form-group" [formGroupName]="i">
+                <div class="row fields-container small">
+                  <div class="col-md-3">
+                    <mat-form-field class="example-full-width">
+                      <input matInput type="text" formControlName="tipo" readonly placeholder="Tipo" value="{{vencimiento.tipo}}">
+                    </mat-form-field>
+                  </div>
+              
+                  <div class="col-md-3">
+                    <mat-form-field>
+                      <input matInput type="text" formControlName="fecha" readonly placeholder="Fecha a Recordar" value="{{vencimiento.fecha}}">
+                    </mat-form-field>
+                  </div>
+              
+                  <div class="col-sm-2">
+                    <mat-form-field>
+                      <input matInput type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' formControlName="qn_diasAnticipacion" placeholder="Días Anticipación">
+                    </mat-form-field>
+                  </div>
+             
+                  <div class="col-sm-2">
+                    <mat-form-field>
+                      <input matInput type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' formControlName="qn_frecuenciaAnticipacion" placeholder="Frecuencia">
+                    </mat-form-field>            
+                  </div>
+                </div>
+              </div>
+            </div>  
+          </div>
+        </div>
+        <div *ngIf="entregables && entregables != ''">
+          <div class="col-md-6">
+            <mat-checkbox class="example-margin" (change)="onChangeDeliverable($event); false">Entregables</mat-checkbox>
+          </div>
+          <div  [class.disabled-content]="isDisabledDeliverable">
+            
+            <div formArrayName="vencimientoEntregables" *ngFor="let vencimiento of formGroup.get('vencimientoEntregables').controls; let i = index;">
+              <div class="form-group" [formGroupName]="i">
+                <div class="row fields-container small">
+                  <div class="col-md-3">
+                    <mat-form-field class="example-full-width">
+                      <input matInput type="text" formControlName="tipo" readonly placeholder="Tipo" value="{{vencimiento.tipo}}">
+                    </mat-form-field>
+                  </div>
+              
+                  <div class="col-md-3">
+                    <mat-form-field>
+                      <input matInput type="text" formControlName="fecha" readonly placeholder="Fecha a Recordar" value="{{vencimiento.fecha}}">
+                    </mat-form-field>
+                  </div>
+              
+                  <div class="col-sm-2">
+                    <mat-form-field>
+                      <input matInput type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' formControlName="qn_diasAnticipacion" placeholder="Días Anticipación">
+                    </mat-form-field>
+                  </div>
+             
+                  <div class="col-sm-2">
+                    <mat-form-field>
+                      <input matInput type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' formControlName="qn_frecuenciaAnticipacion" placeholder="Frecuencia">
+                    </mat-form-field>            
+                  </div>
+                </div>
+              </div>
+            </div>
+    
+          </div>
+        </div>  
+        
+        <button id="submit" mat-raised-button type="submit" color="primary">Guardar</button>
+      </form>
+    </div>
+
+    <div>
+      <span >
+        No Se Encontro Fechas para Notificar
+      </span>
+    </div>   
+
+  </mat-card-content>
+</mat-card>

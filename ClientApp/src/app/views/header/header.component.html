@@ -1,0 +1,86 @@
+<header class="header">
+  <nav class="navbar navbar-expand-sm fixed-top navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow contenedor">
+    <div class="contenedor2 container-fluid">
+      <a class="navbar-brand">
+        <img src="assets/img/logo_espol.png" class="img-fluid">
+      </a>
+      <div>
+        <div *ngIf="!isAuthenticated" class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse menu"
+             [ngClass]="{ show: isExpanded }">
+          <ul class="navbar-nav flex-grow">
+            <li class="nav-item" [routerLinkActive]="['link-active']">
+              <!--a id="estrella" class="nav-link" href="http://192.168.6.144:50000/api/Login/login?returnUrl=http://192.168.6.144/home">Iniciar Sesi&oacute;n <i class="fa fa-fw fa-user"></i></a-->
+              <a id="estrella" class="nav-link" href="http://localhost:50000/api/Login/login?returnUrl=http://localhost:4200/home">Iniciar Sesi&oacute;n <i class="fa fa-fw fa-user"></i></a>
+            </li>
+          </ul>
+        </div>
+        <div *ngIf="isAuthenticated" class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse menu">
+          <ul class="navbar-nav flex-grow">
+            <li class="nav-item">
+              <a id="estrella" class="nav-link"><small>{{_authUser.nombres | titlecase}} {{_authUser.apellidos | titlecase}}, Ultimo Acceso: {{ _authUser.ultimoAcceso | date:"short"  }} </small></a>              
+            </li>
+            <!--li class="nav-item"> 
+
+
+                <div class = "notification">
+                  <a href = "#">
+                  <div class = "notBtn" href = "#">
+                    <div class = "number">0</div>
+                    <i class="fa fa-bell"></i>
+                      <div class = "box">
+                        <div class = "display">
+                          <div class = "nothing"> 
+                            <i class="fas fa-child stick"></i> 
+                            <div class = "cent">Looks Like your all caught up!</div>
+                          </div>
+                          <div class = "cont">
+                            <div class = "sec">
+                               <a href = "https://codepen.io/Golez/">
+                               <div class = "profCont">
+                               <img class = "profile" src = "//c1.staticflickr.com/1/185/440890151_54c5b920b0_b.jpg">
+                                </div>
+                               <div class = "txt">Jerimaiah liked your post: "Pure css notification box"</div>
+                              <div class = "txt sub">11/5 - 1:34 pm</div>
+                               </a>
+                            </div>
+                             <div class = "sec">
+                               <a href = "https://codepen.io/Golez/">
+                               <div class = "profCont">
+                               <img class = "profile" src = "//c2.staticflickr.com/4/3397/3585544855_28442029a5_z.jpg?zz=1">
+                                </div>
+                               <div class = "txt">Debra liked your post: "Pure css notification box"</div>
+                              <div class = "txt sub">11/5 - 10:20 am</div>
+                               </a>
+                            </div>
+                         </div>
+                        </div>
+                     </div>
+                  </div>
+                    </a>
+                </div>
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </li-->
+            <li class="nav-item"> 
+              <a id="estrella" class="nav-link" (click)="logout()" href="http://localhost:50000/api/login/logout"><small>Cerrar Sesi&oacute;n <i class="fa fa-sign-out"></i></small></a>
+              <!--a id="estrella" class="nav-item nav-link" (click)="logout()" href="http://192.168.6.144:50000/api/login/logout"><small>Cerrar Sesi&oacute;n <i class="fa fa-sign-out"></i></small></a-->
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>

@@ -1,0 +1,162 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-2">
+      <app-main-menu></app-main-menu>
+    </div>
+    <div class="col-10 content">
+      <div class="title borde-title">
+        <a data-target="#sidebar" data-toggle="collapse" class="d-md-none"><i class="fa fa-bars"></i></a>Consulta Gen&eacute;rica <span style="color: red;"><small>(* campos obligatorios)</small></span>
+      </div>
+      <div class="content-section">
+        <form [formGroup]="formGroup" (ngSubmit)="consultar()">
+          <div class="row fields-container small">
+            <div class="col-md-3">
+              <mat-form-field>
+                <input matInput placeholder="Por C&oacute;digo" formControlName="codigoContrato" spellcheck="false" autocomplete="off">
+              </mat-form-field>              
+            </div>
+            <div class="col-md-5" *ngIf="_isAdmin">
+              <mat-form-field>
+                <input matInput formControlName="adminContrato" placeholder="Por Administrador" [readonly]="readonly" spellcheck="false" autocomplete="off">
+              </mat-form-field>
+            </div>
+            <div class="col-md-5" *ngIf="!_isAdmin">
+              <mat-form-field>
+                <input matInput placeholder="Seleccione Administrador" [matAutocomplete]="auto" [formControl]="administradorCtrl" (click)="getAdministrador()">
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let state of filteredAdmins | async" [value]="state" (click)="selectedAdmin(state)">
+                    <span>{{ state }}</span>
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field> 
+            </div>
+            <div class="col-md-4">
+              <mat-form-field>
+                <mat-select placeholder="Por Tipo de Contrato" formControlName="tipoContrato">
+                  <mat-option *ngFor="let tipo of tiposContrato" value="{{tipo.txt_nombreTipo}}">{{ tipo.txt_nombreTipo }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>            
+          </div>
+          <div class="row fields-container small">
+            <div class="col-md-3">
+              <mat-form-field>
+                <input matInput formControlName="codigoProceso" placeholder="Por C&oacute;digo de Proceso" spellcheck="false" autocomplete="off">
+              </mat-form-field>
+            </div>
+            <div class="col-md-5">
+              <mat-form-field>
+                <input matInput placeholder="Por Proveedor" [matAutocomplete]="auto" [formControl]="proveedorCtrl" (click)="getProveedor()">
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let state of filteredProveedor | async" [value]="state" (click)="selectedProveedor(state)">
+                    <span>{{ state }}</span>
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field>
+                <mat-select placeholder="Por Estado *" formControlName="estadoContrato">
+                  <mat-option *ngFor="let est of estadosContrato" value="{{est.txt_nombreTipo}}">{{ est.txt_nombreTipo }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row fields-container small">
+            <div class="col-md-4">
+              <label class="small fechas">Por Fecha De Suscripci&oacute;n <!--span style="color: red;"> *</span--></label>
+              <mat-form-field>
+                <input matInput [matDatepicker]="fechaSubs1" placeholder="Desde" formControlName="fechaSubs1" readonly>
+                <mat-datepicker-toggle matSuffix [for]="fechaSubs1"></mat-datepicker-toggle>
+                <mat-datepicker #fechaSubs1 disabled="false"></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput [matDatepicker]="fechaSubs2" placeholder="Hasta" formControlName="fechaSubs2" readonly>
+                <mat-datepicker-toggle matSuffix [for]="fechaSubs2"></mat-datepicker-toggle>
+                <mat-datepicker #fechaSubs2 disabled="false"></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <label class="small fechas">Por Fecha Inicial de Contrato</label>
+              <mat-form-field>
+                <input matInput [matDatepicker]="fechaInicio1" placeholder="Desde" formControlName="fechaInicio1" readonly>
+                <mat-datepicker-toggle matSuffix [for]="fechaInicio1"></mat-datepicker-toggle>
+                <mat-datepicker #fechaInicio1 disabled="false"></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput [matDatepicker]="fechaInicio2" placeholder="Hasta" formControlName="fechaInicio2" readonly>
+                <mat-datepicker-toggle matSuffix [for]="fechaInicio2"></mat-datepicker-toggle>
+                <mat-datepicker #fechaInicio2 disabled="false"></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <label class="small fechas">Por Fecha final de Contrato </label>
+              <mat-form-field>
+                <input matInput [matDatepicker]="fechaFin1" placeholder="Desde" formControlName="fechaFin1" readonly>
+                <mat-datepicker-toggle matSuffix [for]="fechaFin1"></mat-datepicker-toggle>
+                <mat-datepicker #fechaFin1 disabled="false"></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput [matDatepicker]="fechaFin2" placeholder="Hasta" formControlName="fechaFin2" readonly>
+                <mat-datepicker-toggle matSuffix [for]="fechaFin2"></mat-datepicker-toggle>
+                <mat-datepicker #fechaFin2 disabled="false"></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <button class="btn btn-primary" [disabled]="!formGroup.valid">Consultar</button>
+          </div>
+        </form>
+              
+        <div class="col-12" align-content="center">
+          <p *ngIf="contratosFiltrados == '' ">
+            No Existen Datos que Mostrar
+          </p>
+          <div *ngIf=" contratosFiltrados != '' && contratosFiltrados != null">
+            <div class="table">
+              <div class="table-responsive">
+                <table class="table table-striped-sm table-hover">
+                  <thead style="color:rgb(255, 255, 255);"> 
+                    <tr>
+                      <th scope="col">C&oacute;digo</th>
+                      <th scope="col">Descripci&oacute;n</th>
+                      <th scope="col">Proveedor</th>
+                      <th scope="col">Valor adjudicado</th>
+                      <th scope="col">Fech. Inicio</th>
+                      <th scope="col">Fech. Fin</th>
+                      <th scope="col">Estado</th>
+                      <th scope="col">ver historial</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let contrato of contratosFiltrados">
+                      <td title="Ver en Detalle" (click)="verDetalle(contrato.id)">{{contrato.codigo_del_Contrato}}</td>
+                      <td>{{contrato.descripcion}}</td>
+                      <td>{{contrato.nombre_del_Contratista}}</td>
+                      <td>{{contrato.monto_Inicial | currency}}</td>
+                      <td>{{contrato.fecha_de_Inicio_del_Contrato | date: 'dd-MM-yyyy'}}</td>
+                      <td>{{contrato.fecha_Real_de_Finalizacion | date: 'dd-MM-yyyy'}}</td>
+                      <td class="activo" *ngIf="contrato.estado == 'Activo'">Activo</td>
+                      <td class="pendiente" *ngIf="contrato.estado == 'Pendiente'">Pendiente</td>
+                      <td class="nuevo" *ngIf="contrato.estado == 'Nuevo'">Nuevo</td>
+                      <td class="finalizado" *ngIf="contrato.estado == 'Finalizado'">Finalizado</td>
+                      <td (click)="mostrarHistorial(contrato.id)" title="Ver Historial"><i class="fa fa-history" aria-hidden="true"></i></td>
+                    </tr>
+                  </tbody>
+                </table>                
+              </div>
+            </div>
+            &nbsp;
+            <h5>Exportar a </h5>
+            <div class="example-button-row">
+              <button mat-flat-button color="primary" (click)='exportAsXLSX()'> EXCEL 
+                <mat-icon>trending_down</mat-icon>
+              </button>
+            </div>
+          </div>
+          
+        </div>
+       </div>
+    </div>    
+  </div>
+</div>
